@@ -3,13 +3,15 @@ import { useLocation } from 'react-router-dom';
 import { ProductCard } from '../../components/Elements/ProductCard';
 import { FilterBar } from './components/FilterBar';
 import { useTitle } from '../../hooks/useTitle';
+// import { useFilter } from '../../context';
 
 export const ProductsList = () => {
-  useTitle('Explore eBooks');
+  // const { productList } = useFilter();
   const [show, setShow] = useState(false);
   const [product, setProducts] = useState([]);
   const search = useLocation().search;
   const searchTerm = new URLSearchParams(search).get('q');
+  useTitle('Explore eBooks');
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(

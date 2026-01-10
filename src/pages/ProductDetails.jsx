@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTitle } from '../hooks/useTitle';
+import { useFilter } from '../context/useFilter.js';
 
 export const ProductDetail = () => {
   const [product, setProduct] = useState({});
   const { id } = useParams();
   useTitle(product.name);
+  const { productList } = useFilter();
+  console.log(productList);
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`http://localhost:3000/products/${id}`);
