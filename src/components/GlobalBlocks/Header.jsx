@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Search } from '../index';
+import { Search, DropdownLoggedIn, DropdownLoggedOut } from '../index';
 
 export const Header = () => {
   const [dark, setDark] = useState(
     JSON.parse(localStorage.getItem('dark')) || false
   );
   const [showSearch, setShowSearch] = useState(false);
+  const [dropdown, setDropdown] = useState(false);
   useEffect(() => {
     localStorage.setItem('dark', JSON.stringify(dark));
     if (dark) document.documentElement.classList.add('dark');
@@ -42,7 +43,11 @@ export const Header = () => {
                 </span>
               </span>
             </Link>
-            <span className="bi bi-person-circle cursor-pointer text-2xl text-gray-700 dark:text-white"></span>
+            <span
+              onClick={() => setDropdown(!dropdown)}
+              className="bi bi-person-circle cursor-pointer text-2xl text-gray-700 dark:text-white"
+            ></span>
+            {dropdown && <DropdownLoggedOut />}
           </div>
         </div>
       </nav>

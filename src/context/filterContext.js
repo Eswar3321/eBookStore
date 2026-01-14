@@ -5,7 +5,7 @@ export const filterInitialState = {
   onlyInStock: false,
   bestSellerOnly: false,
   sortBy: null,
-  rating: null,
+  ratings: null,
 };
 
 export const FilterContext = createContext(filterInitialState);

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useTitle } from '../hooks/useTitle';
-import { useFilter } from '../context/useFilter.js';
+import { useTitle } from '../../hooks/useTitle.jsx';
+import { useFilter } from '../../context/useFilter.js';
 
-export const ProductDetail = () => {
+export const ProductDetails = () => {
   const [product, setProduct] = useState({});
   const { id } = useParams();
   useTitle(product.name);

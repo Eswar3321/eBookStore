@@ -1,4 +1,7 @@
+import { useFilter } from '../../../context';
+
 export const FilterBar = ({ setShow }) => {
+  const { state, dispatch } = useFilter();
   return (
     <section className="filter">
       <div
@@ -44,9 +47,16 @@ export const FilterBar = ({ setShow }) => {
               <p className="font-semibold my-1">Sort by</p>
               <div className="flex items-center my-1">
                 <input
+                  onChange={() => {
+                    dispatch({
+                      type: 'SORT_BY',
+                      payload: { sortBy: 'lowtohigh' },
+                    });
+                  }}
                   id="price-sort-1"
                   type="radio"
                   value=""
+                  checked={state.sortBy === 'lowtohigh' || false}
                   name="price-sort"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600"
                 />
@@ -59,9 +69,16 @@ export const FilterBar = ({ setShow }) => {
               </div>
               <div className="flex items-center my-1">
                 <input
+                  onChange={() => {
+                    dispatch({
+                      type: 'SORT_BY',
+                      payload: { sortBy: 'hightolow' },
+                    });
+                  }}
                   id="price-sort-2"
                   type="radio"
                   value=""
+                  checked={state.sortBy === 'hightolow' || false}
                   name="price-sort"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600"
                 />
@@ -77,9 +94,16 @@ export const FilterBar = ({ setShow }) => {
               <span className="font-semibold">Rating</span>
               <div className="flex items-center my-1">
                 <input
+                  onChange={() =>
+                    dispatch({
+                      type: 'RATINGS',
+                      payload: { ratings: '4STARABOVE' },
+                    })
+                  }
                   id="rating-sort-1"
                   type="radio"
                   value=""
+                  checked={(state.ratings === '4STARABOVE') | false}
                   name="rating-sort"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600"
                 />
@@ -92,9 +116,16 @@ export const FilterBar = ({ setShow }) => {
               </div>
               <div className="flex items-center my-1">
                 <input
+                  onChange={() =>
+                    dispatch({
+                      type: 'RATINGS',
+                      payload: { ratings: '3STARABOVE' },
+                    })
+                  }
                   id="rating-sort-2"
                   type="radio"
                   value=""
+                  checked={(state.ratings === '3STARABOVE') | false}
                   name="rating-sort"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600"
                 />
@@ -107,9 +138,16 @@ export const FilterBar = ({ setShow }) => {
               </div>
               <div className="flex items-center my-1">
                 <input
+                  onChange={() =>
+                    dispatch({
+                      type: 'RATINGS',
+                      payload: { ratings: '2STARABOVE' },
+                    })
+                  }
                   id="rating-sort-3"
                   type="radio"
                   value=""
+                  checked={(state.ratings === '2STARABOVE') | false}
                   name="rating-sort"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600"
                 />
@@ -122,9 +160,16 @@ export const FilterBar = ({ setShow }) => {
               </div>
               <div className="flex items-center my-1">
                 <input
+                  onChange={() =>
+                    dispatch({
+                      type: 'RATINGS',
+                      payload: { ratings: '1STARABOVE' },
+                    })
+                  }
                   id="rating-sort-4"
                   type="radio"
                   value=""
+                  checked={(state.ratings === '1STARABOVE') | false}
                   name="rating-sort"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600"
                 />
@@ -140,8 +185,15 @@ export const FilterBar = ({ setShow }) => {
               <span className="font-semibold">Other Filters</span>
               <div className="flex items-center my-1">
                 <input
+                  onChange={() =>
+                    dispatch({
+                      type: 'BEST_SELLER_ONLY',
+                      payload: { bestSellerOnly: !state.bestSellerOnly },
+                    })
+                  }
                   id="best-seller"
                   type="checkbox"
+                  checked={state.bestSellerOnly || false}
                   value=""
                   className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 dark:bg-gray-700 dark:border-gray-600"
                 />
@@ -154,9 +206,16 @@ export const FilterBar = ({ setShow }) => {
               </div>
               <div className="flex items-center my-1">
                 <input
+                  onChange={() =>
+                    dispatch({
+                      type: 'ONLY_IN_STOCK',
+                      payload: { onlyInStock: !state.onlyInStock },
+                    })
+                  }
                   id="only-instock"
                   type="checkbox"
                   value=""
+                  checked={state.onlyInStock || false}
                   className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label
@@ -170,6 +229,7 @@ export const FilterBar = ({ setShow }) => {
             <li className="mt-1 mb-5 px-1">
               <button
                 type="button"
+                onClick={() => dispatch({ type: 'CLEAR_FILTER' })}
                 className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-10 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
               >
                 Clear Filter
