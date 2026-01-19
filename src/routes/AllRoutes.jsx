@@ -1,10 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
+import { ProtectedRoute } from './ProtectedRoute';
 import {
   HomePage,
   ProductsList,
   ProductDetails,
   Login,
   Register,
+  CartPage,
 } from '../pages';
 
 const AllRoutes = () => {
@@ -16,6 +18,14 @@ const AllRoutes = () => {
         <Route path="product/:id" element={<ProductDetails />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route
+          path="cart"
+          element={
+            <ProtectedRoute>
+              <CartPage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </>
   );

@@ -1,5 +1,13 @@
 import { Link } from 'react-router-dom';
-export const DropdownLoggedIn = () => {
+import { useNavigate } from 'react-router-dom';
+export const DropdownLoggedIn = ({ setDropdown }) => {
+  const navigate = useNavigate();
+  const handleLoggedOut = () => {
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('userid');
+    setDropdown(false);
+    navigate('/');
+  };
   return (
     <div
       id="dropdownAvatar"
@@ -15,6 +23,7 @@ export const DropdownLoggedIn = () => {
         <li>
           <Link
             href="/products"
+            onClick={() => setDropdown(false)}
             className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
           >
             All eBooks
@@ -23,6 +32,7 @@ export const DropdownLoggedIn = () => {
         <li>
           <Link
             href="/dashboard"
+            onClick={() => setDropdown(false)}
             className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
           >
             Dashboard
@@ -30,7 +40,10 @@ export const DropdownLoggedIn = () => {
         </li>
       </ul>
       <div className="py-1">
-        <span className="cursor-pointer block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+        <span
+          onClick={handleLoggedOut}
+          className="cursor-pointer block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+        >
           Log out
         </span>
       </div>

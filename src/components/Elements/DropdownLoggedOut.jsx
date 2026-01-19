@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-export const DropdownLoggedOut = () => {
+export const DropdownLoggedOut = ({ setDropdown }) => {
   return (
     <div
       id="dropdownAvatar"
@@ -12,6 +12,7 @@ export const DropdownLoggedOut = () => {
         <li>
           <Link
             to="/products"
+            onClick={() => setDropdown(false)}
             className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
           >
             All eBooks
@@ -20,6 +21,7 @@ export const DropdownLoggedOut = () => {
         <li>
           <Link
             to="/login"
+            onClick={() => setDropdown(false)}
             className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
           >
             Login
@@ -28,6 +30,7 @@ export const DropdownLoggedOut = () => {
         <li>
           <Link
             to="/register"
+            onClick={() => setDropdown(false)}
             className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
           >
             Register

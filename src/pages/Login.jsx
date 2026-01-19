@@ -1,4 +1,31 @@
+import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 export const Login = () => {
+  const email = useRef();
+  const password = useRef();
+  const navigate = useNavigate();
+  async function handleLogin(event) {
+    event.preventDefault();
+    const authDetails = {
+      email: event.target.email.value,
+      password: event.target.password.value,
+    };
+    const requstOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(authDetails),
+    };
+    const response = await fetch('http://localhost:8000/login', requstOptions);
+    const data = await response.json();
+    data.accessToken ? navigate('/products') : toast.error(data);
+    if (data.accessToken) {
+      sessionStorage.setItem('token', JSON.stringify(data.accessToken));
+      sessionStorage.setItem('userID', JSON.stringify(data.user.id));
+    }
+  }
+
   return (
     <main>
       <section>
@@ -6,7 +33,7 @@ export const Login = () => {
           Login
         </p>
       </section>
-      <form>
+      <form onSubmit={handleLogin}>
         <div className="mb-6">
           <label
             htmlFor="email"
@@ -17,10 +44,12 @@ export const Login = () => {
           <input
             type="email"
             id="email"
+            name="email"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="shubham@example.com"
+            placeholder="mailid@example.com"
             required
             autoComplete="off"
+            ref={email}
           />
         </div>
         <div className="mb-6">
@@ -35,6 +64,9 @@ export const Login = () => {
             id="password"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
+            name="password"
+            ref={password}
+            placeholder="Enter Your Password"
           />
         </div>
         <button

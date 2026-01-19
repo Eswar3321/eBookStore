@@ -1,4 +1,8 @@
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
 export const Register = () => {
+  const navigate = useNavigate();
   async function handleRegister(event) {
     event.preventDefault();
     const authDetails = {
@@ -16,7 +20,11 @@ export const Register = () => {
       requstOptions
     );
     const data = await response.json();
-    console.log(data);
+    data.accessToken ? navigate('/products') : toast.error(data);
+    if (data.accessToken) {
+      sessionStorage.setItem('token', JSON.stringify(data.accessToken));
+      sessionStorage.setItem('userid', JSON.stringify(data.user.id));
+    }
   }
   return (
     <main>
@@ -38,7 +46,7 @@ export const Register = () => {
             id="name"
             name="name"
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-            placeholder="Shubham Sarda"
+            placeholder="Enter Your Name"
             required
             autoComplete="off"
           />
@@ -55,7 +63,7 @@ export const Register = () => {
             name="email"
             id="email"
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-            placeholder="shubham@example.com"
+            placeholder="Enter Your Email"
             required
             autoComplete="off"
           />
@@ -74,6 +82,7 @@ export const Register = () => {
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             required
             minLength="7"
+            placeholder="Enter Your Password"
           />
         </div>
         <button
