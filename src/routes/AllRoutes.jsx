@@ -7,6 +7,7 @@ import {
   Login,
   Register,
   CartPage,
+  OrderPage,
 } from '../pages';
 
 const AllRoutes = () => {
@@ -23,6 +24,14 @@ const AllRoutes = () => {
           element={
             <ProtectedRoute>
               <CartPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="order-summary"
+          element={
+            <ProtectedRoute>
+              <OrderPage />
             </ProtectedRoute>
           }
         />

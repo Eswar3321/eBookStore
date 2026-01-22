@@ -22,7 +22,7 @@ export const Login = () => {
     data.accessToken ? navigate('/products') : toast.error(data);
     if (data.accessToken) {
       sessionStorage.setItem('token', JSON.stringify(data.accessToken));
-      sessionStorage.setItem('userID', JSON.stringify(data.user.id));
+      sessionStorage.setItem('userid', JSON.stringify(data.user.id));
     }
   }
 
