@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCart } from '../../context';
 import { useTitle } from '../../hooks/useTitle.jsx';
+import { getProduct } from '../../services';
 
 export const ProductDetails = () => {
   const [product, setProduct] = useState({});
@@ -11,9 +12,8 @@ export const ProductDetails = () => {
   const inCart = cartList.find((item) => item.id === product.id);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:3000/products/${id}`);
-      const json = await response.json();
-      setProduct(json);
+      const data = await getProduct(id);
+      setProduct(data);
     };
     fetchData();
   }, [id]);

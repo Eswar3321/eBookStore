@@ -1,52 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useCart } from '../../../context';
+import { getUser, createOrder } from '../../../services';
 import { useNavigate } from 'react-router-dom';
 export const Checkout = ({ setCheckout }) => {
   const [user, setUser] = useState({});
   const { cartList, total, clearCart } = useCart();
   const navigate = useNavigate();
-  const token = JSON.parse(sessionStorage.getItem('token'));
-  const userid = JSON.parse(sessionStorage.getItem('userid'));
+
   useEffect(() => {
-    async function getUser() {
-      const response = await fetch(
-        `http://localhost:8000/600/users/${userid}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = await response.json();
+    async function fetchData() {
+      const data = await getUser();
       setUser(data);
     }
-    getUser();
-  }, [userid, token]);
+    fetchData();
+  }, []);
   async function handleCheckout(e) {
     e.preventDefault();
-    const order = {
-      userid: user.id,
-      cartList: cartList,
-      total: total,
-      quantity: cartList.length,
-      user: {
-        name: user.name,
-        email: user.email,
-        id: user.id,
-      },
-    };
     try {
-      const response = await fetch('http://localhost:8000/660/orders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(order),
-      });
-      const data = await response.json();
+      const data = await createOrder(cartList, total, user);
       clearCart();
       navigate('/order-summary', { state: { data: data, status: true } });
     } catch (error) {
@@ -191,7 +162,7 @@ export const Checkout = ({ setCheckout }) => {
                 </p>
                 <button
                   type="submit"
-                  className="w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700"
+                  className="w-full cursor-pointer text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700"
                 >
                   <i className="mr-2 bi bi-lock-fill"></i>PAY NOW
                 </button>

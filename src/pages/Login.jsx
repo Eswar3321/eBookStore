@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { login } from '../services';
 
 export const Login = () => {
   const email = useRef();
@@ -12,18 +13,8 @@ export const Login = () => {
       email: event.target.email.value,
       password: event.target.password.value,
     };
-    const requstOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(authDetails),
-    };
-    const response = await fetch('http://localhost:8000/login', requstOptions);
-    const data = await response.json();
+    const data = await login(authDetails);
     data.accessToken ? navigate('/products') : toast.error(data);
-    if (data.accessToken) {
-      sessionStorage.setItem('token', JSON.stringify(data.accessToken));
-      sessionStorage.setItem('userid', JSON.stringify(data.user.id));
-    }
   }
 
   return (

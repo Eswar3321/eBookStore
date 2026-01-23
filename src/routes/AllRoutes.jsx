@@ -8,6 +8,8 @@ import {
   Register,
   CartPage,
   OrderPage,
+  DashboardPage,
+  PageNotFound,
 } from '../pages';
 
 const AllRoutes = () => {
@@ -35,6 +37,15 @@ const AllRoutes = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="dashboard"
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </>
   );

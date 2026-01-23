@@ -4,6 +4,7 @@ import { ProductCard } from '../../components/Elements/ProductCard';
 import { FilterBar } from './components/FilterBar';
 import { useTitle } from '../../hooks/useTitle';
 import { useFilter } from '../../context';
+import { getProductsList } from '../../services';
 
 export const ProductsList = () => {
   const { productList, initialProductList } = useFilter();
@@ -14,10 +15,7 @@ export const ProductsList = () => {
   useTitle('Explore eBooks');
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        `http://localhost:3000/products?q=${searchTerm ? searchTerm : ''}`
-      );
-      const data = await response.json();
+      const data = await getProductsList(searchTerm);
       initialProductList(data);
     };
     fetchData();
