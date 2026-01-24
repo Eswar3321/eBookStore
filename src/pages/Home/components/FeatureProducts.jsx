@@ -1,12 +1,18 @@
 import { useState, useEffect } from 'react';
 import { ProductCard } from '../../../components/Elements/ProductCard';
 import { getFeaturedList } from '../../../services';
+import { toast } from 'react-toastify';
 export const FeatureProducts = () => {
   const [product, setProducts] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getFeaturedList();
-      setProducts(data);
+      try {
+        const data = await getFeaturedList();
+        setProducts(data);
+      } catch (error) {
+        console.error('Failed to fetch featured products:', error);
+        toast.error('Failed to load featured products. Please try again.');
+      }
     };
     fetchData();
   }, []);

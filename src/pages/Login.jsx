@@ -2,19 +2,31 @@ import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { login } from '../services';
+import { useTitle } from '../hooks/useTitle';
 
 export const Login = () => {
+  useTitle('Login | eBookStore');
   const email = useRef();
   const password = useRef();
   const navigate = useNavigate();
   async function handleLogin(event) {
     event.preventDefault();
-    const authDetails = {
-      email: event.target.email.value,
-      password: event.target.password.value,
-    };
-    const data = await login(authDetails);
-    data.accessToken ? navigate('/products') : toast.error(data);
+    try {
+      const authDetails = {
+        email: event.target.email.value,
+        password: event.target.password.value,
+      };
+      const data = await login(authDetails);
+      if (data.accessToken) {
+        toast.success('Login successful!');
+        navigate('/products');
+      } else {
+        toast.error(data?.message || 'Login failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      toast.error('An error occurred during login. Please try again.');
+    }
   }
 
   return (

@@ -2,12 +2,20 @@ import { useEffect, useState } from 'react';
 import { getUserOrders } from '../../services';
 import { DashboardCard } from './components/DashboardCard';
 import { DashboardEmpty } from './components/DashboardEmpty';
+import { toast } from 'react-toastify';
+import { useTitle } from '../../hooks/useTitle';
 export const DashboardPage = () => {
+  useTitle('Dashboard | eBookStore');
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     async function fetchOrders() {
-      const data = await getUserOrders();
-      setOrders(data);
+      try {
+        const data = await getUserOrders();
+        setOrders(data);
+      } catch (error) {
+        console.error('Failed to fetch orders:', error);
+        toast.error('Failed to load your orders. Please try again.');
+      }
     }
     fetchOrders();
   }, []);

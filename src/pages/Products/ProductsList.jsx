@@ -5,6 +5,7 @@ import { FilterBar } from './components/FilterBar';
 import { useTitle } from '../../hooks/useTitle';
 import { useFilter } from '../../context';
 import { getProductsList } from '../../services';
+import { toast } from 'react-toastify';
 
 export const ProductsList = () => {
   const { productList, initialProductList } = useFilter();
@@ -15,8 +16,13 @@ export const ProductsList = () => {
   useTitle('Explore eBooks');
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getProductsList(searchTerm);
-      initialProductList(data);
+      try {
+        const data = await getProductsList(searchTerm);
+        initialProductList(data);
+      } catch (error) {
+        console.error('Failed to fetch products:', error);
+        toast.error('Failed to load products. Please try again.');
+      }
     };
     fetchData();
   }, [searchTerm, initialProductList]);

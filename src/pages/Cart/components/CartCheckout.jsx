@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useCart } from '../../../context';
 import { getUser, createOrder } from '../../../services';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 export const Checkout = ({ setCheckout }) => {
   const [user, setUser] = useState({});
   const { cartList, total, clearCart } = useCart();
@@ -9,8 +10,13 @@ export const Checkout = ({ setCheckout }) => {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await getUser();
-      setUser(data);
+      try {
+        const data = await getUser();
+        setUser(data);
+      } catch (error) {
+        console.error('Failed to fetch user:', error);
+        toast.error('Failed to load user details. Please try again.');
+      }
     }
     fetchData();
   }, []);
@@ -18,11 +24,18 @@ export const Checkout = ({ setCheckout }) => {
     e.preventDefault();
     try {
       const data = await createOrder(cartList, total, user);
-      clearCart();
-      navigate('/order-summary', { state: { data: data, status: true } });
+      if (data.id) {
+        toast.success('Order created successfully!');
+        clearCart();
+        navigate('/order-summary', { state: { data: data, status: true } });
+      } else {
+        toast.error('Failed to create order. Please try again.');
+        navigate('/order-summary', { state: { status: false } });
+      }
     } catch (error) {
+      console.error('Checkout error:', error);
+      toast.error('An error occurred during checkout. Please try again.');
       navigate('/order-summary', { state: { status: false } });
-      console.log(error);
     }
   }
   return (

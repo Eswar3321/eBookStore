@@ -12,9 +12,13 @@ createRoot(document.getElementById('root')).render(
       <CartProvider>
         <FilterProvider>
           <App />
-          <ToastContainer closeButton={false} autoClose={3000} />
+          <ToastContainer
+            position="bottom-center"
+            closeButton={false}
+            autoClose={3000}
+          />
         </FilterProvider>
       </CartProvider>
     </Router>
-  </StrictMode>
+  </StrictMode>,
 );

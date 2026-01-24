@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useCart } from '../../context';
 import { useTitle } from '../../hooks/useTitle.jsx';
 import { getProduct } from '../../services';
+import { toast } from 'react-toastify';
 
 export const ProductDetails = () => {
   const [product, setProduct] = useState({});
@@ -12,8 +13,13 @@ export const ProductDetails = () => {
   const inCart = cartList.find((item) => item.id === product.id);
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getProduct(id);
-      setProduct(data);
+      try {
+        const data = await getProduct(id);
+        setProduct(data);
+      } catch (error) {
+        console.error('Failed to fetch product details:', error);
+        toast.error('Failed to load product details. Please try again.');
+      }
     };
     fetchData();
   }, [id]);

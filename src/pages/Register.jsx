@@ -1,17 +1,29 @@
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../services';
+import { useTitle } from '../hooks/useTitle';
 export const Register = () => {
+  useTitle('Register | eBookStore');
   const navigate = useNavigate();
   async function handleRegister(event) {
     event.preventDefault();
-    const authDetails = {
-      name: event.target.name.value,
-      email: event.target.email.value,
-      password: event.target.password.value,
-    };
-    const data = await register(authDetails);
-    data.accessToken ? navigate('/products') : toast.error(data);
+    try {
+      const authDetails = {
+        name: event.target.name.value,
+        email: event.target.email.value,
+        password: event.target.password.value,
+      };
+      const data = await register(authDetails);
+      if (data.accessToken) {
+        toast.success('Registration successful!');
+        navigate('/products');
+      } else {
+        toast.error(data?.message || 'Registration failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      toast.error('An error occurred during registration. Please try again.');
+    }
   }
   return (
     <main>

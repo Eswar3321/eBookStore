@@ -5,58 +5,73 @@ function getSessionData() {
 }
 
 export async function getUser() {
-  const browserData = getSessionData();
-  const response = await fetch(
-    `http://localhost:8000/600/users/${browserData.userid}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${browserData.token}`,
+  try {
+    const browserData = getSessionData();
+    const response = await fetch(
+      `http://localhost:8000/600/users/${browserData.userid}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${browserData.token}`,
+        },
       },
-    },
-  );
-  const data = await response.json();
-  return data;
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Get user error:', error.message);
+    throw error;
+  }
 }
 
 export async function createOrder(cartList, total, user) {
-  const browserData = getSessionData();
-  const order = {
-    userid: user.id,
-    cartList: cartList,
-    total: total,
-    quantity: cartList.length,
-    user: {
-      name: user.name,
-      email: user.email,
-      id: user.id,
-    },
-  };
-  const response = await fetch('http://localhost:8000/660/orders', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${browserData.token}`,
-    },
-    body: JSON.stringify(order),
-  });
-  const data = await response.json();
-  return data;
-}
-
-export async function getUserOrders() {
-  const browserData = getSessionData();
-  const response = await fetch(
-    `http://localhost:8000/660/orders?user.id=${browserData.userid}`,
-    {
-      method: 'GET',
+  try {
+    const browserData = getSessionData();
+    const order = {
+      userid: user.id,
+      cartList: cartList,
+      total: total,
+      quantity: cartList.length,
+      user: {
+        name: user.name,
+        email: user.email,
+        id: user.id,
+      },
+    };
+    const response = await fetch('http://localhost:8000/660/orders', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${browserData.token}`,
       },
-    },
-  );
-  const data = await response.json();
-  return data;
+      body: JSON.stringify(order),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Create order error:', error.message);
+    throw error;
+  }
+}
+
+export async function getUserOrders() {
+  try {
+    const browserData = getSessionData();
+    const response = await fetch(
+      `http://localhost:8000/660/orders?user.id=${browserData.userid}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${browserData.token}`,
+        },
+      },
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Get user orders error:', error.message);
+    throw error;
+  }
 }

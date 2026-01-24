@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useTitle } from '../hooks/useTitle';
 
 export const PageNotFound = () => {
-  useTitle('Page Not Found');
+  useTitle('Page Not Found | eBookStore');
 
   return (
     <main>
