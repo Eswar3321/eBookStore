@@ -1,6 +1,6 @@
 function getSessionData() {
-  const token = JSON.parse(sessionStorage.getItem('token'));
   const userid = JSON.parse(sessionStorage.getItem('userid'));
+  const token = JSON.parse(sessionStorage.getItem('token'));
   return { token, userid };
 }
 
