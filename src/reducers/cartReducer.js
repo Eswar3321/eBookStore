@@ -11,6 +11,6 @@ export const cartReducer = (state, action) => {
     case 'UPDATE_PRICE':
       return;
     default:
-      throw new Error('No case Found!');
+      throw new Error('No case Found!'); //eslint-disable-line
   }
 };

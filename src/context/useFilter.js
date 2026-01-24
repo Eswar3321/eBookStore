@@ -5,7 +5,7 @@ export const useFilter = () => {
   const context = useContext(FilterContext);
 
   if (!context) {
-    throw new Error('useFilter must be used inside FilterProvider');
+    throw new Error('useFilter must be used inside FilterProvider'); //eslint-disable-line
   }
 
   return context;

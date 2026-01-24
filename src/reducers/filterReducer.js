@@ -20,6 +20,6 @@ export const filterReducer = (state, action) => {
         ratings: null,
       };
     default:
-      throw new Error('No Case Found!');
+      throw new Error('No Case Found!'); //eslint-disable-line
   }
 };

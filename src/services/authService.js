@@ -5,7 +5,10 @@ export async function login(authDetails) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(authDetails),
     };
-    const response = await fetch('http://localhost:8000/login', requstOptions);
+    const response = await fetch(
+      `${import.meta.env.VITE_HOST}/login`,
+      requstOptions,
+    );
     const data = await response.json();
     if (data.accessToken) {
       sessionStorage.setItem('token', JSON.stringify(data.accessToken));
@@ -14,7 +17,7 @@ export async function login(authDetails) {
     return data;
   } catch (error) {
     console.error('Login error:', error.message);
-    throw error;
+    throw error; //eslint-disable-line
   }
 }
 
@@ -26,7 +29,7 @@ export async function register(authDetails) {
       body: JSON.stringify(authDetails),
     };
     const response = await fetch(
-      'http://localhost:8000/register',
+      `${import.meta.env.VITE_HOST}/register`,
       requstOptions,
     );
     const data = await response.json();
@@ -37,7 +40,7 @@ export async function register(authDetails) {
     return data;
   } catch (error) {
     console.error('Registration error:', error.message);
-    throw error;
+    throw error; //eslint-disable-line
   }
 }
 
