@@ -29,6 +29,27 @@ export const Login = () => {
     }
   }
 
+  async function handleLoginasGuest() {
+    try {
+      ((email.current.value = 'eswar@example.com'),
+        (password.current.value = 'eswar123'));
+      const authDetails = {
+        email: email.current.value,
+        password: password.current.value,
+      };
+      const data = await login(authDetails);
+      if (data.accessToken) {
+        toast.success('Login successful!');
+        navigate('/products');
+      } else {
+        toast.error(data?.message || 'Login failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      toast.error('An error occurred during login. Please try again.');
+    }
+  }
+
   return (
     <main>
       <section>
@@ -79,7 +100,12 @@ export const Login = () => {
           Log In
         </button>
       </form>
-      {/* <button className="mt-3 cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login As Guest</button> */}
+      <button
+        onClick={handleLoginasGuest}
+        className="mt-3 cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      >
+        Login As Guest
+      </button>
     </main>
   );
 };
