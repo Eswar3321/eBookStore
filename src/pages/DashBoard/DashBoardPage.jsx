@@ -28,9 +28,9 @@ export const DashboardPage = () => {
       </section>
       <section>
         {orders.length &&
-          orders.map((order) => <DashboardCard key={order.id} order={order} />)}
+          orders.map((order) => <DashBoardCard key={order.id} order={order} />)}
       </section>
-      <section>{!orders.length && <DashboardEmpty />}</section>
+      <section>{!orders.length && <DashBoardEmpty />}</section>
     </main>
   );
 };
