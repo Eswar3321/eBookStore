@@ -18,7 +18,7 @@ export const FeatureProducts = () => {
   }, []);
 
   return (
-    <div className="flex">
+    <div className="flex-column md:flex">
       {product.map((prod) => (
         <ProductCard product={prod} key={prod.id} />
       ))}
