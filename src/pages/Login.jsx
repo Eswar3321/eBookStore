@@ -31,12 +31,14 @@ export const Login = () => {
 
   async function handleLoginasGuest() {
     try {
-      ((email.current.value = 'eswar@example.com'),
-        (password.current.value = 'eswar123'));
+      ((email.current.value = `${import.meta.env.VITE_GUEST_USERID}`),
+        (password.current.value = `${import.meta.env.VITE_GUEST_PW}`));
+
       const authDetails = {
         email: email.current.value,
         password: password.current.value,
       };
+      console.log(authDetails);
       const data = await login(authDetails);
       if (data.accessToken) {
         toast.success('Login successful!');
